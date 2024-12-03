@@ -1,0 +1,68 @@
+<footer class="fixed bottom-0 left-0 right-0 bg-zinc-800 border-t border-zinc-700 p-4 z-56">
+  <div class="flex items-center justify-between w-full px-4">
+    <%!-- left --%>
+    <%= if @playing_song do %>
+      <div class="flex gap-3 items-center w-[30%]">
+        <span>
+          <img
+            src={@playing_song.image}
+            class="w-12 h-12 object-cover rounded-md"
+            alt="Current Song"
+          />
+        </span>
+        
+        <span class="flex flex-col items-start">
+          <h3 class="font-bold text-sm mb-1 truncate"><%= @playing_song.title %></h3>
+           <small class="text-gray-400"><%= @playing_song.singer.name %></small>
+        </span>
+        
+        <span>
+          <.icon
+            name="hero-heart"
+            class="w-6 h-6 text-green-500 hover:text-green-400 cursor-pointer"
+          />
+        </span>
+      </div>
+    <% else %>
+      <div class="w-[30%]"></div>
+    <% end %>
+     <%!-- center --%>
+    <div class="flex flex-col items-center gap-2 w-[40%]">
+      <audio id="audio-player" controls disabled>
+        <source id="audio-source" src="" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+     <%!-- right --%>
+    <div class="flex items-center gap-4 w-[30%] justify-end">
+      <.icon name="hero-queue-list" class="w-5 h-5 text-gray-400 hover:text-white cursor-pointer" />
+      <.icon
+        name="hero-speaker-wave"
+        class="w-5 h-5 text-gray-400 hover:text-white cursor-pointer"
+      />
+    </div>
+  </div>
+</footer>
+
+<script>
+   let audioPlayer = document.getElementById("audio-player");
+  let audioSource = document.getElementById("audio-source");
+
+  window.addEventListener("phx:play_song", (event) => {
+    const { file_path, is_playing } = event.detail;
+
+    // Set the audio source to the file path
+    audioSource.src = file_path;
+
+    // Enable the controls and start playing
+    audioPlayer.load(); // Ensure the audio player reloads the new source
+    audioPlayer.disabled = false;
+
+    // Play or pause based on is_playing
+    if (is_playing) {
+      audioPlayer.play();
+    } else {
+      audioPlayer.pause();
+    }
+  });
+</script>

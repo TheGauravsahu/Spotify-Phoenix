@@ -1,0 +1,62 @@
+<div class="container mx-auto p-4 bg-black text-white max-w-3xl">
+  <h1 class="text-3xl font-bold mb-4">Search</h1>
+  
+  <.form for={@query} phx-submit="search" class="flex items-center mb-4">
+    <input
+      type="text"
+      name="query"
+      value={@query["query"]}
+      placeholder="Search for songs or playlists"
+      class="p-2 rounded bg-gray-800 text-white w-full"
+      phx-debounce="300"
+    />
+    <button type="submit" class="ml-2 p-2 bg-green-500 text-white rounded hover:bg-green-600">
+      Search
+    </button>
+  </.form>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <%= for result <- @results do %>
+      <div class="bg-gray-900 rounded-xl overflow-hidden shadow-2xl transform transition duration-300 hover:scale-105 hover:shadow-3xl relative group">
+        <%= if result.image do %>
+          <div class="relative">
+            <img
+              src={result.image}
+              alt={"#{result.title} album cover"}
+              class="w-full h-64 md:h-80 object-cover group-hover:brightness-75 transition-all duration-300"
+            />
+            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 p-4">
+              <h3 class="font-bold text-white text-xl truncate mb-1"><%= result.title %></h3>
+              
+              <p class="text-gray-300 text-sm">
+                <%= if result.singer, do: result.singer.name, else: "Unknown Artist" %>
+              </p>
+            </div>
+            
+        
+          </div>
+        <% end %>
+        
+        <div class="p-5">
+          <div class="flex justify-between items-center">
+            <div class="flex-grow pr-4">
+              <div class="flex items-center space-x-2 mb-2">
+                <%= if result.genre do %>
+                  <span class="bg-gray-800 text-green-400 text-xs px-2 py-1 rounded-full">
+                    <%= result.genre %>
+                  </span>
+                <% end %>
+                
+                <%= if result.duration do %>
+                  <span class="text-gray-400 text-xs">
+                    <%= result.duration %>
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

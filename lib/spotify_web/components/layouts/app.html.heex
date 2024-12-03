@@ -1,0 +1,49 @@
+<header class="sticky top-0 right-0 w-full p-4 z-40">
+  <nav class="flex items-center justify-between px-8">
+    <div class="flex items-start gap-1 justify-center">
+      <img src="/images/logo.svg" alt="logo" width={40} />
+      <.link navigate={~p"/"} class="font-semibold text-lg">Spotify</.link>
+    </div>
+
+    <div class="flex items-center gap-6">
+      <%= if @current_user do %>
+        <div class="flex items-center gap-4">
+          <.link navigate={~p"/users/settings"}>
+            <span class="text-white text-sm flex items-center">
+              <.icon name="hero-user-circle" class="w-6 h-6 mr-2 text-green-500" /> <%= @current_user.email %>
+            </span>
+          </.link>
+
+          <.link
+            href={~p"/users/log_out"}
+            method="delete"
+            class="text-zinc-400 hover:text-white hover:scale-105 transition-all text-sm bg-[#282828] px-4 py-2 rounded-full"
+          >
+            Log out
+          </.link>
+        </div>
+      <% else %>
+        <.link
+          navigate={~p"/users/register"}
+          class="text-zinc-400 hover:text-white hover:scale-105 transition-all text-sm"
+        >
+          Sign up
+        </.link>
+
+        <.link
+          navigate={~p"/users/log_in"}
+          class="bg-white hover:scale-105 transition-all text-zinc-950 rounded-full px-6 py-3 font-semibold text-sm"
+        >
+          Log in
+        </.link>
+      <% end %>
+    </div>
+  </nav>
+</header>
+
+<main class="">
+  <div>
+    <.flash_group flash={@flash} />
+    <%= @inner_content %>
+  </div>
+</main>

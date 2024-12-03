@@ -1,0 +1,44 @@
+<aside class="fixed top-0 left-0 z-40 w-64 h-screen p-8">
+  <div class="flex flex-col h-full px-3 py-4 mt-8">
+    <div class="space-y-6">
+      <.link
+        :for={item <- @nav_items}
+        navigate={~p"/#{item.href}"}
+        class="flex items-center gap-3  transition-colors duration-200 ease-in-out font-medium"
+      >
+        <.icon name={item.icon} class="w-6 h-6" /> <%= item.name %>
+      </.link>
+      
+      <div class="pt-4 text-sm">
+        <div class="pb-2 text-gray-400 font-bold">Playlists</div>
+        
+        <div class="space-y-4">
+          <a
+            href=""
+            class="block text-gray-400 hover:text-white transition-colors duration-200 ease-in-out"
+          >
+            My Playlist #1
+          </a>
+          <a
+            href=""
+            class="block text-gray-400 hover:text-white transition-colors duration-200 ease-in-out"
+          >
+            Chill Vibes
+          </a>
+          <a
+            href=""
+            class="block text-gray-400 hover:text-white transition-colors duration-200 ease-in-out"
+          >
+            Workout Mix
+          </a>
+          <a
+            href=""
+            class="block text-gray-400 hover:text-white transition-colors duration-200 ease-in-out"
+          >
+            Road Trip Songs
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>

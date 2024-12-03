@@ -1,0 +1,40 @@
+<div class="h-full w-full">
+  <div class="flex">
+    <.sidebar nav_items={@nav_items} />
+    <div class="w-full min-h-screen ml-64 bg-zinc-900 p-4 pb-32">
+      <h1 class="font-bold text-2xl">Good evening</h1>
+      
+      <div class="mt-8 grid grid-cols-4 gap-4 w-full">
+        <div
+          :for={song <- @songs}
+          class="bg-zinc-800/40 rounded-md p-3 hover:bg-zinc-800 transition-all group cursor-pointer"
+        >
+          <div class="relative">
+            <img
+              src={song.image}
+              class="w-full aspect-square object-cover rounded-md shadow-lg mb-3"
+              alt=""
+            />
+            <!-- Play/Pause Button -->
+            <button
+              phx-click={JS.push("toggle_play_song", value: %{song_id: song.id})}
+              class="absolute bottom-2 right-2 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all shadow-xl hover:scale-105"
+            >
+              <%= if @playing_song && @playing_song.id == song.id && @is_playing do %>
+                <.icon name="hero-pause-solid" class="w-5 h-5 text-black" />
+              <% else %>
+                <.icon name="hero-play-solid" class="w-5 h-5 text-black" />
+              <% end %>
+            </button>
+          </div>
+          
+          <h3 class="font-bold text-sm mb-1 truncate"><%= song.title %></h3>
+          
+          <p class="text-xs text-zinc-400 line-clamp-2"><%= song.singer.name %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+   <.footer playing_song={@playing_song} is_playing={@is_playing} />
+</div>
+
